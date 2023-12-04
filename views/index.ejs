@@ -1,0 +1,19 @@
+<%- include('partials/header.ejs') %>
+
+<div class="index-main px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="/images/blog.svg" alt="UDBlogger image" width="30%">
+    <h1 class="display-5 fw-bold text-body-emphasis">Welcome to your blog!</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            Welcome to UDBlogger, the brainchild of Udbhav Dalal! Dive into a user-friendly blog web application where
+            words come alive, and ideas find a home. Whether you're here to share your stories or explore the curated
+            content, UDBlogger is your digital sanctuary. Join us on this exciting journey of creativity and connection.
+            Welcome to a space where every click opens the door to inspiration. Happy blogging!</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/create"><button type="button" class="newPost"> + New Post</button></a>
+            <a href="/posts"><button type="button" class="viewPost">View Posts</button></a>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer.ejs') %>

@@ -1,0 +1,26 @@
+<%- include('partials/header.ejs') %>
+
+<div class="index-main px-4 py-5 my-5 text-center">
+    <h1 class="display-4 fw-bold text-body-emphasis"> <%- curTitle %> </h1>
+    <h4 class="display-7 fw-bold text-body-emphasis"> <%- curSummary %> </h4>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4 view-blog">
+            <%- curContent %>!</p>
+    </div>
+</div>
+
+<div class="d-grid gap-2 d-sm-flex justify-content-sm-center posts-bottom">
+    <form action="/update" method="post">
+        <input type="hidden" name="id" value="<%= curID %>"></input>
+        <input type="hidden" name="title" value="<%= curTitle %>"></input>
+        <input type="hidden" name="summary" value="<%= curSummary %>"></input> 
+        <input type="hidden" name="content" value="<%= curContent %>"></input>  
+        <button type="submit" class="newPost">Update Post</button>
+    </form>
+    <form action="/delete" method="post" onsubmit="return confirmDel()">
+        <input type="hidden" name="id" value="<%= curID %>"></input>
+        <button type="submit" class="viewPost">Delete Post</button>
+    </form>
+</div>
+
+<%- include('partials/footer.ejs') %>

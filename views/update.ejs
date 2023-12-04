@@ -1,0 +1,42 @@
+<%- include('partials/header.ejs') %>
+
+<form action="/submit-update" method="POST">
+    <div class="create-main container-fluid">
+        <div class="form-group">
+            <label for="title">
+                <h4>Title<sup>*</sup></h4>
+            </label>
+            <input type="hidden" name="id" value="<%= id %>"></input>
+            <input type="text" class="form-control" id="title" name="title" placeholder="Post title" value="<%= title %>" required>
+        </div>
+        <div class="form-group">
+            <label for="summary">
+                <h4>Summary<sup>*</sup></h4>
+            </label>
+            <input type="text" class="form-control" id="summary" name="summary" placeholder="Post summary" value="<%= summary %>" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">
+                <h4>Content<sup>*</sup></h4>
+            </label>
+            <textarea class="form-control" id="content" rows="20" name="content" placeholder="express your thoughts.."
+                required><%= content %></textarea>
+        </div>
+        <form>
+            <div class="form-group">
+                <label class="coverphotolabel" for="coverphoto">
+                    <h4>Select a cover photo</h4>
+                </label>
+                <br>
+                <input type="file" class="form-control-file" id="coverphoto" name="coverphoto">
+            </div>
+            <div class="submit-div">
+                <input type="submit" class="newPost"></input>
+            </div>
+
+        </form>
+    </div>
+</form>
+
+<%- include('partials/footer.ejs') %>
