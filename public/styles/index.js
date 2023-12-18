@@ -5,3 +5,11 @@ $(".fa-brands").hover(function() {
 function confirmDel() {
     return confirm("Are you sure?");
 };
+
+function submitForm() {
+    // Find the form by its ID
+    var form = document.getElementById('signOutForm');
+
+    // Trigger the form submission
+    form.submit();
+}

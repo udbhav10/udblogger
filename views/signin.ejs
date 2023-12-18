@@ -1,0 +1,26 @@
+<%- include('partials/header.ejs') %>
+<div class="signin text-center">
+    <form action="/signin" method="POST" class="signinForm">
+        <img class="mb-4" src="images/logoMaroon.svg" alt="" width="70">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <div class="form-floating">
+            <input type="username" class="form-control" id="floatingInput" placeholder="name@example.com"
+                name="username" required>
+            <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password"
+                required>
+            <label for="floatingPassword">Password</label>
+        </div>
+        <% if(locals.errorMsg) { %>
+        <p class="mt-3 text-body-secondary"><%= errorMsg %></p>
+        <% } else {} %>
+        <button class="newPost" type="submit">Sign in</button>
+        <a href="/createacc" class="createacclink">
+            <p class="mt-3 text-body-secondary">Create an account</p>
+        </a>
+    </form>
+</div>
+<%- include('partials/footer.ejs') %>

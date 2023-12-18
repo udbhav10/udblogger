@@ -30,9 +30,14 @@
     <header>
         <img class="myLogo" src="images/logo.svg" alt="My logo">
         <a class="header" href="/"> Home </a>
-        <a class="header" href="/about"> About </a>
         <a class="header" href="/posts"> Posts </a>
-        <a class="header" href="/contact"> Contact </a>
+        <% if(!signedIn) { %>
+        <a class="header" href="/signin"> Sign In </a>
+        <% } else { %>
+        <form id="signOutForm" class="header"  action="/", method = "POST">    
+        <a onclick="submitForm()"> Sign Out </a> </input>
+        </form>
+        <% } %>    
     </header>
 
     <main>

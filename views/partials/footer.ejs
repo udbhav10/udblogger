@@ -2,9 +2,14 @@
 <footer>
     <div class="footer-links">
         <a class="footer" href="/"> Home </a>
-        <a class="footer" href="/about"> About </a>
         <a class="footer" href="/posts"> Posts </a>
-        <a class="footer" href="/contact"> Contact </a>
+        <% if(!signedIn) { %>
+        <a class="footer" href="/signin"> Sign In </a>
+        <% } else { %>
+        <form id="signOutForm" class="footer" action="/", method = "POST">    
+        <a onclick="submitForm()"> Sign Out </a> </input>
+        </form>
+        <% } %>   
     </div>
     <div class="footer-links bottom">
         <a class="footer-icons" href="https://instagram.com/udbhavdalal?igshid=YTQwZjQ0NmI0OA=="><i

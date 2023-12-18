@@ -5,11 +5,17 @@ const port = 3000;
 var postTitle = "";
 var postSummary = "";
 var postContent = "";
-var postId = 1;
-var allPosts = [];
+var allPosts = {};
+var allPostsCount = {};
+var signedIn = false;
+var accounts = {};
+var loginErrorMessage = "";
+var uname = "";
 app.use(express.static("public"));
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 function getPostData(req, res, next) {
     postTitle = req.body.title;
@@ -20,24 +26,40 @@ function getPostData(req, res, next) {
 
 app.use(getPostData);
 
-app.get('/', (req, res) => {
-    res.render("index.ejs");
-})
+app.use((req, res, next) => {
+    res.locals.signedIn = signedIn;
+    next();
+});
 
-app.get('/contact', (req, res) => {
-    res.render("contact.ejs");
+app.get('/', (req, res) => {
+    res.render("index.ejs", {
+        username: uname
+    });
 })
 
 app.get('/create', (req, res) => {
-    res.render("create.ejs");
+    if (!signedIn)
+        res.redirect("/signin");
+    else
+        res.render("create.ejs");
 })
 
 app.get('/posts', (req, res) => {
-    res.render("posts.ejs", {allBlogPosts: allPosts});
+    if (!signedIn)
+        res.redirect("/signin");
+    else
+        res.render("posts.ejs", {
+            allBlogPosts: allPosts[uname]
+        });
 })
 
-app.get('/about', (req, res) => {
-    res.render("about.ejs");
+
+app.get("/signin", (req, res) => {
+    res.render("signin.ejs");
+})
+
+app.get("/createacc", (req, res) => {
+    res.render("createacc.ejs");
 })
 
 app.post('/delete', (req, res) => {
@@ -50,34 +72,36 @@ app.post('/view', (req, res) => {
 
     var curPostData = {
         curID: curPost,
-        curTitle: allPosts[curPost]['title'],
-        curSummary: allPosts[curPost]['summary'],
-        curContent: allPosts[curPost]['content'],
+        curTitle: allPosts[uname][curPost]['title'],
+        curSummary: allPosts[uname][curPost]['summary'],
+        curContent: allPosts[uname][curPost]['content'],
     };
     res.render('view.ejs', curPostData);
 })
 
 app.post('/submit', (req, res) => {
+
+
     var data = {
-        id: postId,
+        id: allPostsCount.uname,
         title: postTitle,
         summary: postSummary,
         content: postContent,
     };
-    allPosts.push(data);
-    postId++;
+    allPosts[uname].push(data);
+    allPostsCount.uname++;
     var finalData = {
-        allBlogPosts: allPosts,
+        allBlogPosts: allPosts[uname],
     };
     res.render("submit.ejs", finalData);
 })
 
 app.post('/submit-update', (req, res) => {
-    
 
-    allPosts[req.body.id].title = req.body.title;
-    allPosts[req.body.id].summary = req.body.summary;
-    allPosts[req.body.id].content = req.body.content;
+
+    allPosts[uname][req.body.id].title = req.body.title;
+    allPosts[uname][req.body.id].summary = req.body.summary;
+    allPosts[uname][req.body.id].content = req.body.content;
 
     res.render("submit-update.ejs");
 })
@@ -90,6 +114,44 @@ app.post('/update', (req, res) => {
         content: postContent,
     };
     res.render('update.ejs', updateData);
+})
+
+app.post('/createacc', (req, res) => {
+    uname = req.body.username;
+    var pwd = req.body.password;
+    if (uname in accounts) {
+        loginErrorMessage = "username already exists";
+        res.render('createacc.ejs', {
+            errorMsg: loginErrorMessage
+        });
+    } else {
+        signedIn = true;
+        accounts[uname] = pwd;
+        allPosts[uname] = [];
+        allPostsCount[uname] = 1;
+        
+        res.redirect("/");
+    }
+
+})
+
+app.post('/signin', (req, res) => {
+    uname = req.body.username;
+    var pwd = req.body.password;
+    if (!(uname in accounts) || (accounts[uname] !== pwd)) {
+        loginErrorMessage = "Incorrect username or password";
+        res.render('signin.ejs', {
+            errorMsg: loginErrorMessage
+        });
+    } else {
+        signedIn = true;
+        res.redirect("/");
+    }
+})
+
+app.post('/', (req, res) => {
+    signedIn = false;
+    res.redirect("/");
 })
 
 app.listen(port, () => {

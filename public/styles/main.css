@@ -207,3 +207,30 @@ sup {
 .view-blog {
     text-align: justify;
 }
+
+/* signin */
+
+.signin {
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+}
+
+.signinForm {
+    width: 30%;
+}
+
+.createacclink {
+    text-decoration: none;
+    color: black;
+}
+
+.createacclink:hover {
+
+    font-weight: 600;
+}
+
+#signOutForm {
+    text-align: center;
+    cursor: pointer;
+}
