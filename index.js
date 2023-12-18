@@ -63,7 +63,7 @@ app.get("/createacc", (req, res) => {
 })
 
 app.post('/delete', (req, res) => {
-    allPosts.splice(req.body.id, 1);
+    allPosts[uname].splice(req.body.id, 1);
     res.redirect('/posts');
 })
 
